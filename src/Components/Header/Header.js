@@ -20,9 +20,9 @@ function Header(){
                     </h1>
                     <ul className='header__menu'>
                         <li className='header__item header-item'><Link to='/' className='header-item__link'>Home</Link></li>
-                        <li className='header__item header-item'><Link to='/card' className='header-item__link'>Card</Link></li>
+                        <li className='header__item header-item'><Link to='/cards' className='header-item__link'>Cards</Link></li>
                         <li className='header__item header-item'><Link to='/word' className='header-item__link'>Word</Link></li>
-                        <li className='header__item header-item'><Link to='/setting' className='header-item__link'>Setting</Link></li>
+                        <li className='header__item header-item'><Link to='/settings' className='header-item__link'>Settings</Link></li>
                     </ul>
                 </div>
             </div>

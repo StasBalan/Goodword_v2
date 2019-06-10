@@ -8,17 +8,17 @@ import Cards from '../Cards/Cards';
 import Settings from '../Settings/Settings';
 import Word from '../Word/Word';
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+        <Header />
         <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/card' component={Cards}/>
+            <Route path='/cards' component={Cards}/>
             <Route path='/word' component={Word}/>
-            <Route path='/setting' component={Settings}/>
+            <Route path='/settings' component={Settings}/>
         </Switch>
     </BrowserRouter>
   );
