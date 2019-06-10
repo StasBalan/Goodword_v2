@@ -2,11 +2,11 @@ import React from 'react';
 
 import './App.css';
 
-import Header from '../Header/Header';
-import Home from '../Home/Home';
-import Cards from '../Cards/Cards';
-import Settings from '../Settings/Settings';
-import Word from '../Word/Word';
+import Header from '../Components/Header/Header';
+import Home from '../Components/Home/Home';
+import Cards from '../Components/Cards/Cards';
+import Settings from '../Components/Settings/Settings';
+import Word from '../Components/Word/Word';
 
 import {BrowserRouter, Route, Switch } from 'react-router-dom';
 
