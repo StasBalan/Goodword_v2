@@ -4,6 +4,7 @@ import './style.css'
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions/Actions';
+import Sidebar from "../Sidebar/Sidebar";
 
 class Setting extends Component{
     constructor(props) {
@@ -30,6 +31,8 @@ class Setting extends Component{
             newArr.push(arr[rand]);
             arr.splice(rand, 1);
         }
+        this.setState({range: '1'});
+        alert(`Was added ${this.state.range} cards`);
         this.props.actionSave(arr);
         this.props.actionSave(newArr);
         // console.log(arr);
@@ -38,12 +41,14 @@ class Setting extends Component{
     render() {
         return (
             <section className='settings'>
+                <Sidebar/>
                 <div className='container'>
-                    <h1>Setting</h1>
                     <div className='settings__box'>
-                        <p>{this.state.range}</p>
-                        <input onChange={this.isRange} value={this.state.range} type="range" className='range' min='1' max={this.props.arrA.length} step='1'/>
-                        <button onClick={this.isSave}>Save</button>
+                        <h1 className='settings__title'>Setting</h1>
+                        <p className='settings__text'>Add some cards</p>
+                        <p className='settings__count'>{this.state.range}</p>
+                        <input onChange={this.isRange} value={this.state.range} type="range" className='range' min='1' max='12' step='1'/>
+                        <button className='settings__button' onClick={this.isSave}>Save</button>
                     </div>
                 </div>
             </section>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './style.css';
 
 import Modal from '../Modal/Modal';
+import Sidebar from '../Sidebar/Sidebar';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions/Actions';
@@ -70,18 +71,28 @@ class Cards extends Component{
 
         return (
             <section className='cards'>
+                <Sidebar />
                 <div className='container'>
-                    {isFetching ? <h1>Add some settings</h1> :
+                    {isFetching ? <div id="cube-loader">
+                            <div className="caption">
+                                <div className="cube-loader">
+                                    <div className="cube loader-1"/>
+                                    <div className="cube loader-2"/>
+                                    <div className="cube loader-4"/>
+                                    <div className="cube loader-3"/>
+                                </div>
+                            </div>
+                        </div> :
                         <ul className='cards__menu'>
                             {elements}
                         </ul>}
-                    <Modal
+                    {this.state.isShowing ?
+                        <Modal
                         title={this.state.modalText}
-                        className="modal"
                         showModal={this.state.isShowing}
                         closeModal={this.closeModalHandler.bind(this)}>
                         <p>{this.state.modalDisc}</p>
-                    </Modal>
+                    </Modal> : null}
                 </div>
             </section>
         );

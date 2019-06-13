@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './style.css'
 
+import Header from "../Header/Header";
+
 class Home extends Component{
 
     constructor(props) {
@@ -21,11 +23,23 @@ class Home extends Component{
     render() {
         return (
             <section className='section__home section-home'>
-                <div className='container'>
+                <Header />
+                    <h1 className='section__title'>Motivation</h1>
                     <div className='section-home__inner'>
-                        { this.state.isFetching ? <div className='loader' /> : <h1 className='section__title'>{this.state.data}</h1> }
+                        { this.state.isFetching ?
+                            <div id="cube-loader">
+                                <div className="caption">
+                                    <div className="cube-loader">
+                                        <div className="cube loader-1"/>
+                                        <div className="cube loader-2"/>
+                                        <div className="cube loader-4"/>
+                                        <div className="cube loader-3"/>
+                                    </div>
+                                </div>
+                             </div>
+                            : <p className='section__text'>{this.state.data}</p> }
                     </div>
-                </div>
+
             </section>
         );
     }
