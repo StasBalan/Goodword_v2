@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './style.css';
 
+var classNames = require('classnames');
+
 class Modal extends Component {
 
     constructor(props) {
@@ -20,21 +22,12 @@ class Modal extends Component {
 
     render() {
         let { showModal, closeModal, children } = this.props;
+        var testClass = classNames('modal-mainClass', {
+            'modal-extraClass': showModal
+        });
         return (
             ReactDOM.createPortal(
-                <div className={showModal ? 'modal' : null} style={
-                    {
-                        background: showModal ? 'rgba(0,0,0,0.7)' : null,
-                        position: showModal ? 'fixed' : null,
-                        top: '0',
-                        bottom: '0',
-                        left: '0',
-                        right: '0',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        overflow: 'hidden'
-                    }
-                }>
+                <div className={testClass}>
                 <div className='modal-wrapper'
                      style={{
                          transform: showModal ? 'translateY(0vh)' : 'translateY(-100vh)',
