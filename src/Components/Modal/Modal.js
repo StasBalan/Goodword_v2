@@ -15,7 +15,9 @@ class Modal extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://api.unsplash.com/search/photos?client_id=3600e79e752283c702d8928b0abbac28e7b0bd1b3108dfdb1d4c091a2b46a01d&query=${this.props.title}`)
+        const myClientId = process.env.REACT_APP_MY_API_KEY;
+        let url = `https://api.unsplash.com/search/photos?client_id=${myClientId}&query=${this.props.title}`;
+        fetch(url)
             .then((res) => res.json())
             .then((data) => this.setState({srcImg: data.results[0].urls.small}))
     }

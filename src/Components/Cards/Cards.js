@@ -23,8 +23,9 @@ class Cards extends Component{
 
     componentDidMount() {
         let arr = this.props.arrB;
+        var key = process.env.REACT_APP_MY_SECOND_API_KEY;
         arr.forEach((el) =>{
-            fetch(`https://www.dictionaryapi.com/api/v3/references/sd4/json/${el}?key=b94e78e4-8545-4c28-bd32-2b331aede418`)
+            fetch(`https://www.dictionaryapi.com/api/v3/references/sd4/json/${el}?key=${key}`)
                 .then((res) => res.json())
                 .then((data) => this.bar(data));
         });
