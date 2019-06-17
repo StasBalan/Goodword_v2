@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 
 import './style.css';
 
+import { connect } from 'react-redux';
+import * as actions from "../../actions/Actions";
+
 var classNames = require('classnames');
 
 class Modal extends Component {
@@ -22,6 +25,17 @@ class Modal extends Component {
             .then((data) => this.setState({srcImg: data.results[0].urls.small}))
     }
 
+    setToStore() {
+        let arr = JSON.parse(localStorage.getItem('localKey')) || [];
+        let obj = {
+            title: this.props.title,
+            disc: this.props.children.props.children
+        };
+        arr.push(obj);
+        localStorage.setItem('localKey', JSON.stringify(arr));
+    }
+
+
     render() {
         let { showModal, closeModal, children } = this.props;
         var testClass = classNames('modal-mainClass', {
@@ -30,23 +44,31 @@ class Modal extends Component {
         return (
             ReactDOM.createPortal(
                 <div className={testClass}>
-                <div className='modal-wrapper'
-                     style={{
-                         transform: showModal ? 'translateY(0vh)' : 'translateY(-100vh)',
-                         opacity: showModal ? '1' : '0'
-                     }}>
-                    <div className="modal-header">
-                        <h3>{`${this.props.title}`.toUpperCase()[0] + `${this.props.title}`.slice(1)}</h3>
-                        <span className="close-modal-btn" onClick={closeModal}>×</span>
+                    <div className='modal-wrapper'
+                         style={{
+                             transform: showModal ? 'translateY(0vh)' : 'translateY(-100vh)',
+                             opacity: showModal ? '1' : '0'
+                         }}>
+                        <div className="modal-header">
+                            <h3>{`${this.props.title}`.toUpperCase()[0] + `${this.props.title}`.slice(1)}</h3>
+                            <span className="close-modal-btn" onClick={closeModal}>×</span>
+                            <button onClick={this.setToStore.bind(this)}>add</button>
+                        </div>
+                        <div className="modal-body">
+                            {children}
+                            <img src={this.state.srcImg} alt=""/>
+                        </div>
                     </div>
-                    <div className="modal-body">
-                        {children}
-                        <img src={this.state.srcImg} alt=""/>
-                    </div>
-                </div>
-            </div>, document.body)
+                </div>, document.body)
         );
     }
 }
 
-export default Modal;
+
+
+const mapStateToProps = (state) => {
+    return {
+        arrL: state.localArr
+    }
+};
+export default connect (mapStateToProps, actions)(Modal);

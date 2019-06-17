@@ -15,7 +15,8 @@ class Sidebar extends Component {
             listArray: [
                     {title: 'Home', route: '/'},
                     {title: 'Cards', route: '/cards'},
-                    {title: 'Settings', route: '/settings'}
+                    {title: 'Settings', route: '/settings'},
+                    {title: 'Store', route: '/store'}
                 ]
         };
         this.handleOpen = this.handleOpen.bind(this);
