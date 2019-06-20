@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './style.css'
 
 import Header from "../Header/Header";
+import CardsItems from "../Cards-items/Cards-items";
+import { connect } from 'react-redux';
+import * as actions from "../../actions/Actions";
 
 class Home extends Component{
 
@@ -22,6 +25,7 @@ class Home extends Component{
 
     render() {
         return (
+            <>
             <section className='section__home section-home'>
                 <Header />
                     <h1 className='section__title'>Motivation</h1>
@@ -39,10 +43,17 @@ class Home extends Component{
                              </div>
                             : <p className='section__text'>{this.state.data}</p> }
                     </div>
-
             </section>
+                {this.props.isShowingCards ? <CardsItems/> : null }
+                </>
         );
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        isShowingCards: state.isShowingCards
+    }
+};
+
+export default connect (mapStateToProps, actions)(Home);

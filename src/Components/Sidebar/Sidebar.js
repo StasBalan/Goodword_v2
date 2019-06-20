@@ -16,7 +16,7 @@ class Sidebar extends Component {
                     {title: 'Home', route: '/'},
                     {title: 'Cards', route: '/cards'},
                     {title: 'Settings', route: '/settings'},
-                    {title: 'Store', route: '/store'}
+                    {title: 'Favorites', route: '/store'}
                 ]
         };
         this.handleOpen = this.handleOpen.bind(this);
@@ -59,6 +59,7 @@ class Sidebar extends Component {
             <div>
                 <span className='burger' onClick={this.handleOpen}>&#9776;</span>
                 <ul className='header__menu' style={{width: this.state.widthSidebar}}>
+                    <span className='close-btn' onClick={this.handleClose}>&#xd7;</span>
                     {elementsSidebar}
                 </ul>
             </div>

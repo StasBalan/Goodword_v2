@@ -58,6 +58,17 @@
     cursor: pointer;
 }
 
+.settings__checkbox {
+    margin-top: 50px;
+    color: #ffffff;
+}
+
+.settings__checkbox input {
+    margin-left: 20px;
+    width: 20px;
+    height: 20px;
+}
+
 .settings__button {
     position: absolute;
     bottom: 30px;

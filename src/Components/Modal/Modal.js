@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 
 import './style.css';
 
-import { connect } from 'react-redux';
-import * as actions from "../../actions/Actions";
-
 var classNames = require('classnames');
 
 class Modal extends Component {
@@ -27,9 +24,11 @@ class Modal extends Component {
 
     setToStore() {
         let arr = JSON.parse(localStorage.getItem('localKey')) || [];
+        const { children } = this.props;
+        let childrenItem = children.props.children;
         let obj = {
             title: this.props.title,
-            disc: this.props.children.props.children
+            disc: childrenItem
         };
         arr.push(obj);
         localStorage.setItem('localKey', JSON.stringify(arr));
@@ -64,11 +63,4 @@ class Modal extends Component {
     }
 }
 
-
-
-const mapStateToProps = (state) => {
-    return {
-        arrL: state.localArr
-    }
-};
-export default connect (mapStateToProps, actions)(Modal);
+export default Modal;

@@ -1,7 +1,8 @@
 const reducer = (
     state = {
         data: ['football', 'baseball', 'art', 'footer','angle','bag','bed','say','beautiful','through','against','cake'],
-        dataRange: []
+        dataRange: [],
+        isShowingCards: false
     },action) => {
     switch (action.type) {
         case 'SAVE_WORD':
@@ -11,6 +12,11 @@ const reducer = (
                 ...state,
                 data: newData,
                 dataRange: newDataRange
+            };
+        case 'SHOW_CARDS':
+            return {
+              ...state,
+              isShowingCards: !state.isShowingCards
             };
         default:
             return state;

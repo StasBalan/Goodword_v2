@@ -5,7 +5,7 @@ import './App.css';
 import Home from '../Components/Home/Home';
 import Cards from '../Components/Cards/Cards';
 import Settings from '../Components/Settings/Settings';
-import Store from '../Components/Store/Store';
+import Favorites from '../Components/Favorites/Favorites';
 
 import {BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route path='/cards' component={Cards}/>
             <Route path='/settings' component={Settings}/>
-            <Route path='/store' component={Store}/>
+            <Route path='/store' component={Favorites}/>
         </Switch>
     </BrowserRouter>
   );
