@@ -15,10 +15,10 @@ class Cards extends Component{
         isFetching: true
     };
 
-    componentDidMount = () => {
-        let dataRange = this.props.dataRange;
+    componentDidMount() {
+        const wordsToLearn = this.props.wordsToLearn;
         const key = process.env.REACT_APP_MY_SECOND_API_KEY;
-        dataRange.forEach((el) => {
+        wordsToLearn.forEach((el) => {
             fetch(`https://www.dictionaryapi.com/api/v3/references/sd4/json/${el}?key=${key}`)
                 .then(() => this.setState({ isFetching: false }));
         });
@@ -48,9 +48,13 @@ class Cards extends Component{
     }
 }
 
+Cards.defaultProps = {
+    wordsToLearn: []
+};
+
 const mapStateToProps = (state) => {
     return {
-        dataRange: state.dataRange
+        wordsToLearn: state.wordsToLearn
     }
 };
 

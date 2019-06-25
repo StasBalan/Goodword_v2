@@ -14,7 +14,6 @@ class Setting extends Component{
             isChecked: false
         };
         this.isRange = this.isRange.bind(this);
-        this.isSave = this.isSave.bind(this);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -26,8 +25,6 @@ class Setting extends Component{
         return state;
     }
 
-
-
     isRange(e) {
         let value = Number(e.target.value);
         this.setState({
@@ -35,21 +32,23 @@ class Setting extends Component{
         })
     }
 
-    isSave() {
-        let arr = this.props.arrA;
-        let newArr = this.props.arrB;
-        for ( let j = 0; j < this.state.range; j++ ) {
-            let rand = Math.floor(Math.random() * arr.length);
-            newArr.push(arr[rand]);
-            arr.splice(rand, 1);
+    handleSave = () => {
+        const arr = this.props.vocabularyS;
+        console.log(arr);
+        const wordsToLearn = [];
+        for ( let i = 0; i < this.state.range; i++ ) {
+            const rand = Math.floor(Math.random() * arr.length);
+            wordsToLearn.push(arr[rand]);
         }
         this.setState({range: '1'});
         alert(`Was added ${this.state.range} cards`);
+        console.log(wordsToLearn);
+
         this.props.showingCards(this.setShow);
-        this.props.actionSave(arr);
-        this.props.actionSave(newArr);
+        this.props.filterVocabulary(wordsToLearn);
+        this.props.addToStudyWords(wordsToLearn);
         // console.log(arr);
-    }
+    };
 
     setShow() {
         this.setState((state) => ({isChecked: !state.isChecked}));
@@ -69,7 +68,7 @@ class Setting extends Component{
                         <label className='settings__checkbox'>Show cards on the main page
                             <input onClick={this.setShow.bind(this)} value={this.state.isChecked} type="checkbox"/>
                         </label>
-                        <button className='settings__button' onClick={this.isSave}>Save</button>
+                        <button className='settings__button' onClick={this.handleSave}>Save</button>
                     </div>
                 </div>
             </section>
@@ -79,8 +78,8 @@ class Setting extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        arrA: state.data,
-        arrB: state.dataRange,
+        vocabularyS: state.vocabulary ? state.vocabulary : [],
+        wordsToLearn: state.wordsToLearn ? state.wordsToLearn: [],
         isShowingCards: state.isShowingCards
     }
 };

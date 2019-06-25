@@ -10,8 +10,15 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducer/Reducer.js';
+import { loadState, saveState } from "./localStorage";
 
-let store = createStore(reducer);
+const persistedState = loadState();
+
+const store = createStore(reducer, persistedState);
+
+store.subscribe(() => {
+    saveState( {localArray: store.getState().dataLocalStorage});
+});
 
 ReactDOM.render(
     <Provider store={store}>

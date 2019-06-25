@@ -18,9 +18,9 @@ class CardsItems extends Component{
     };
 
     componentDidMount = () => {
-        let dataRange = this.props.dataRange;
+        let wordsToLearn = this.props.wordsToLearn;
         const key = process.env.REACT_APP_MY_SECOND_API_KEY;
-        dataRange.forEach((el) => {
+        wordsToLearn.forEach((el) => {
             fetch(`https://www.dictionaryapi.com/api/v3/references/sd4/json/${el}?key=${key}`)
                 .then((res) => res.json())
                 .then((data) => this.fetchingFunc(data));
@@ -87,7 +87,7 @@ class CardsItems extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        dataRange: state.dataRange
+        wordsToLearn: state.wordsToLearn
     }
 };
 

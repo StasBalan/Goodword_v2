@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import './style.css';
+import { connect } from 'react-redux';
+import * as actions from '../../actions/Actions';
 
 var classNames = require('classnames');
 
+
 class Modal extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            srcImg: ''
-        };
-    }
+    state = {
+        srcImg: ''
+    };
 
     componentDidMount() {
         const myClientId = process.env.REACT_APP_MY_API_KEY;
@@ -22,21 +22,29 @@ class Modal extends Component {
             .then((data) => this.setState({srcImg: data.results[0].urls.small}))
     }
 
-    setToStore() {
-        let arr = JSON.parse(localStorage.getItem('localKey')) || [];
-        const { children } = this.props;
+    setToStore = () => {
+        let {children, title, dataLocalStorage} = this.props;
         let childrenItem = children.props.children;
-        let obj = {
-            title: this.props.title,
-            disc: childrenItem
+        // let arr = JSON.parse(localStorage.getItem('localKey')) || [];
+        let array = [];
+        let object = {
+            title: title,
+            disc: childrenItem,
+            isFavorites: true
         };
-        arr.push(obj);
-        localStorage.setItem('localKey', JSON.stringify(arr));
-    }
+
+        array.push(object);
+        console.log(object);
+
+        this.props.saveInLocalStorage(array);
+        console.log(this.props.dataLocalStorage);
+        // arr.push(obj);
+        // localStorage.setItem('localKey', JSON.stringify(arr));
+    };
 
 
     render() {
-        let { showModal, closeModal, children } = this.props;
+        let {showModal, closeModal, children, title} = this.props;
         var testClass = classNames('modal-mainClass', {
             'modal-extraClass': showModal
         });
@@ -49,13 +57,20 @@ class Modal extends Component {
                              opacity: showModal ? '1' : '0'
                          }}>
                         <div className="modal-header">
-                            <h3>{`${this.props.title}`.toUpperCase()[0] + `${this.props.title}`.slice(1)}</h3>
-                            <span className="close-modal-btn" onClick={closeModal}>×</span>
-                            <button onClick={this.setToStore.bind(this)}>add</button>
+                            <h3>{`${title}`.toUpperCase()[0] + `${this.props.title}`.slice(1)}</h3>
+                            <button onClick={this.setToStore}
+                                    className='favorites-btn'>
+                                <i className={this.state.isFavorites ? "fas fa-heart" : "far fa-heart"}/>
+                            </button>
+                            <span className="close-modal-btn"
+                                  onClick={closeModal}>
+                                ×
+                            </span>
                         </div>
                         <div className="modal-body">
                             {children}
-                            <img src={this.state.srcImg} alt=""/>
+                            <img src={this.state.srcImg}
+                                 alt=""/>
                         </div>
                     </div>
                 </div>, document.body)
@@ -63,4 +78,10 @@ class Modal extends Component {
     }
 }
 
-export default Modal;
+const mapStateToProps = (state) => {
+    return {
+        dataLocalStorage: state.dataLocalStorage
+    }
+};
+
+export default connect (mapStateToProps, actions)(Modal);

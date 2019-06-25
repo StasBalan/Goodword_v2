@@ -34,26 +34,11 @@ class Sidebar extends Component {
     render() {
         let { listArray } = this.state;
         const elementsSidebar = listArray.map((item, index) => {
-            if(this.props.arrF.length !== 0){
-                return (
-                    <li key={index} className='header__item header-item'>
-                        <Link to={item.route} className='header-item__link'>{item.title}</Link>
-                    </li>
-                );
-            }else {
-                if(item.title === 'Cards'){
-                    return (
-                        <li key={index} className='header__item header-item'>
-                            <Link to='/settings' className='header-item__link'>{item.title}</Link>
-                        </li>
-                    );
-                }
-                return (
-                    <li key={index} className='header__item header-item'>
-                        <Link to={item.route} className='header-item__link'>{item.title}</Link>
-                    </li>
-                );
-            }
+            return (
+                <li key={index} className='header__item header-item'>
+                    <Link to={item.route} className='header-item__link'>{item.title}</Link>
+                </li>
+            );
         });
         return (
             <div>
@@ -69,7 +54,7 @@ class Sidebar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      arrF: state.dataRange
+      dataRange: state.dataRange
   }
 };
 

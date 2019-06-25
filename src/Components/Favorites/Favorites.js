@@ -3,32 +3,32 @@ import React, { Component } from 'react';
 import './style.css';
 
 import Sidebar from '../Sidebar/Sidebar';
+import { connect } from 'react-redux';
+import * as actions from "../../actions/Actions";
 
 
 class Favorites extends Component {
 
-    state = {
-        localArray: []
-    };
-
-    showCards = () => {
-        let newArr = JSON.parse(localStorage.getItem('localKey'));
-        let arr = newArr ? newArr : {title: 'Add', disc: 'something'};
-        this.setState({
-            localArray: arr
-        });
-    };
-
-    clearAll = () => {
-        localStorage.clear();
-        this.setState({localArray: []})
-    };
+    // state = {
+    //     localArray: []
+    // };
+    //
+    // showCards = () => {
+    //     this.setState({
+    //         localArray: this.props.dataLocalStorage
+    //     });
+    // };
+    //
+    // clearAll = () => {
+    //     this.setState({localArray: []})
+    // };
 
     render () {
-        let { localArray } = this.state;
+        // let { localArray } = this.state;
+        let { dataLocalStorage } = this.props;
         const elements = [];
-        if(localArray.length) {
-            elements.push(localArray.map((el, index) => {
+        if(dataLocalStorage) {
+            elements.push(dataLocalStorage.map((el, index) => {
                 return (
                     <li key={index}
                         className='cards__item'>
@@ -46,16 +46,19 @@ class Favorites extends Component {
                 <div className='container'>
                     <div className='store__inner'>
                         <h1 className='store__title'>Store</h1>
-                        <button className='store__btn'
-                                onClick={this.clearAll}>
-                            Clear All
-                        </button>
-                        <button className='store__btn'
-                                onClick={this.showCards}>
-                            Show Cards
-                        </button>
+                        {/*<button className='store__btn'*/}
+                                {/*onClick={this.clearAll}>*/}
+                            {/*Clear All*/}
+                        {/*</button>*/}
+                        {/*<button className='store__btn'*/}
+                                {/*onClick={this.showCards}>*/}
+                            {/*Show Cards*/}
+                        {/*</button>*/}
                     </div>
-                   <ul className='cards__menu'>
+                    {/*{ dataLocalStorage.length ? <ul className='cards__menu'>*/}
+                        {/*{elements}*/}
+                    {/*</ul> : <h1> asd</h1>}*/}
+                    <ul className='cards__menu'>
                         {elements}
                     </ul>
                 </div>
@@ -64,4 +67,10 @@ class Favorites extends Component {
     }
 }
 
-export default Favorites;
+const mapStateToProps = (state) => {
+    return {
+        dataLocalStorage: state.dataLocalStorage
+    }
+};
+
+export default connect (mapStateToProps, actions)(Favorites);
