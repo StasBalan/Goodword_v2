@@ -11,7 +11,12 @@ var classNames = require('classnames');
 class Modal extends Component {
 
     state = {
-        srcImg: ''
+        srcImg: '',
+        foo: {
+            title: this.props.title,
+            disc: this.props.children.props.children,
+            isFavorites: false
+        }
     };
 
     componentDidMount() {
@@ -25,16 +30,19 @@ class Modal extends Component {
     setToStore = () => {
         let {children, title, dataLocalStorage} = this.props;
         let childrenItem = children.props.children;
+        let array = dataLocalStorage.slice();
         // let arr = JSON.parse(localStorage.getItem('localKey')) || [];
-        let array = [];
-        let object = {
-            title: title,
-            disc: childrenItem,
-            isFavorites: true
-        };
 
-        array.push(object);
-        console.log(object);
+        // let object = {
+        //     title: title,
+        //     disc: childrenItem,
+        //     isFavorites: this.state.isFavorites
+        // };
+
+        this.setState({isFavorites: !this.state.isFavorites});
+
+        array.push(this.state.foo);
+        // console.log(object);
 
         this.props.saveInLocalStorage(array);
         console.log(this.props.dataLocalStorage);
@@ -80,7 +88,7 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        dataLocalStorage: state.dataLocalStorage
+        dataLocalStorage: state.dataLocalStorage || []
     }
 };
 

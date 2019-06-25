@@ -7,9 +7,7 @@ const reducer = (
     },action) => {
     switch (action.type) {
         case 'FILTER_VOCABULARY':
-            var newVocabulary = state.vocabulary.filter((el) => {
-                return el !== action.payload;
-            });
+            var newVocabulary = [...state.vocabulary, ...action.payload];
             return {
                 ...state,
                 vocabulary: newVocabulary
@@ -25,10 +23,9 @@ const reducer = (
               isShowingCards: !state.isShowingCards
             };
         case 'SAVE_IN_LOCAL_STORAGE':
-            var newAd = [...state.dataLocalStorage, ...action.payload];
             return {
                 ...state,
-                dataLocalStorage: newAd
+                dataLocalStorage: [...state.wordsToLearn, ...action.payload]
             };
         default:
             return state;

@@ -33,19 +33,20 @@ class Setting extends Component{
     }
 
     handleSave = () => {
-        const arr = this.props.vocabularyS;
+        const arr = this.props.vocabulary.slice();
         console.log(arr);
         const wordsToLearn = [];
         for ( let i = 0; i < this.state.range; i++ ) {
             const rand = Math.floor(Math.random() * arr.length);
             wordsToLearn.push(arr[rand]);
+            arr.splice([rand], 1);
         }
         this.setState({range: '1'});
         alert(`Was added ${this.state.range} cards`);
         console.log(wordsToLearn);
 
         this.props.showingCards(this.setShow);
-        this.props.filterVocabulary(wordsToLearn);
+        this.props.filterVocabulary(arr);
         this.props.addToStudyWords(wordsToLearn);
         // console.log(arr);
     };
@@ -78,7 +79,7 @@ class Setting extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        vocabularyS: state.vocabulary ? state.vocabulary : [],
+        vocabulary: state.vocabulary ? state.vocabulary : [],
         wordsToLearn: state.wordsToLearn ? state.wordsToLearn: [],
         isShowingCards: state.isShowingCards
     }
