@@ -11,7 +11,13 @@ var classNames = require('classnames');
 class Modal extends Component {
 
     state = {
-        srcImg: ''
+        srcImg: '',
+        isFavorites: false,
+        obj: {
+            title: this.props.title,
+            disc: this.props.children.props.children,
+            isFavorites: true
+        }
     };
 
     componentDidMount() {
@@ -22,25 +28,35 @@ class Modal extends Component {
             .then((data) => this.setState({srcImg: data.results[0].urls.small}))
     }
 
+    componentDidUpdate(props) {
+        // console.log(props.favorites.isFavorites);
+        console.log(props.favorites.title);
+        if (this.state.isFavorites !== this.state.obj.isFavorites) {
+            this.setState({isFavorites: !this.state.isFavorites});
+        }
+    }
+
+
     setToStore = () => {
-        let {children, title, dataLocalStorage} = this.props;
+        let {children, title, favorites} = this.props;
         let childrenItem = children.props.children;
         // let arr = JSON.parse(localStorage.getItem('localKey')) || [];
         let array = [];
-        let object = {
-            title: title,
-            disc: childrenItem,
-            isFavorites: true
-        };
-
-        array.push(object);
-        console.log(object);
-
+        // let object = {
+        //     title: title,
+        //     disc: childrenItem,
+        //     isFavorites: true
+        // };
+        this.setState((state) => ({isFavorites: !state.isFavorites}));
+        array.push(this.state.obj);
         this.props.saveInLocalStorage(array);
-        console.log(this.props.dataLocalStorage);
+        console.log(array);
+
+        console.log(this.props.favorites);
         // arr.push(obj);
         // localStorage.setItem('localKey', JSON.stringify(arr));
     };
+
 
 
     render() {
@@ -62,6 +78,7 @@ class Modal extends Component {
                                     className='favorites-btn'>
                                 <i className={this.state.isFavorites ? "fas fa-heart" : "far fa-heart"}/>
                             </button>
+                            {/*<input onChange={this.setToStore} type="checkbox" checked={this.props.isFavorites}/>*/}
                             <span className="close-modal-btn"
                                   onClick={closeModal}>
                                 ×
@@ -80,7 +97,7 @@ class Modal extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        dataLocalStorage: state.dataLocalStorage
+        favorites: state.favorites || [],
     }
 };
 

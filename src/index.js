@@ -12,13 +12,23 @@ import { createStore } from 'redux';
 import reducer from './reducer/Reducer.js';
 import { loadState, saveState } from "./localStorage";
 
-const persistedState = loadState();
+const inititalState = {
+    vocabulary: ['football', 'baseball', 'art', 'footer','angle','bag','bed','say','beautiful','through','against','cake'],
+    wordsToLearn: [],
+    favorites: [],
+    isShowingCards: false
+};
 
+const persistedState =  loadState()  || inititalState ;
+console.log('загружаем persistedState', persistedState)
 const store = createStore(reducer, persistedState);
 
+
 store.subscribe(() => {
-    saveState( {localArray: store.getState().dataLocalStorage});
+    saveState( {localArray: store.getState().favorites});
 });
+
+
 
 ReactDOM.render(
     <Provider store={store}>

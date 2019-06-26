@@ -27,32 +27,42 @@ class Setting extends Component{
 
     isRange(e) {
         let value = Number(e.target.value);
+        console.log('сохраняем range', value)
         this.setState({
             range: value
         })
     }
 
     handleSave = () => {
-        const arr = this.props.vocabularyS;
-        console.log(arr);
+        const arr = this.props.vocabulary;
+        console.log('сработал handleSave',this.props, this.state);
         const wordsToLearn = [];
         for ( let i = 0; i < this.state.range; i++ ) {
             const rand = Math.floor(Math.random() * arr.length);
+            console.log('выбираем случайный rand', rand)
             wordsToLearn.push(arr[rand]);
+            arr.splice([rand], 1);
         }
-        this.setState({range: '1'});
-        alert(`Was added ${this.state.range} cards`);
+        // alert(`Was added ${this.state.range} cards`); // - эта штука портит всё, никогда так не делай
+        // кстати ты можешь расскоментировать этот alert и посмотреть что у тебя происходит :)
         console.log(wordsToLearn);
-
-        this.props.showingCards(this.setShow);
-        this.props.filterVocabulary(wordsToLearn);
-        this.props.addToStudyWords(wordsToLearn);
-        // console.log(arr);
+        console.log('запуск actions', wordsToLearn)
+        if (wordsToLearn) {
+            console.log('перед filterVocabulary')
+            this.props.filterVocabulary(arr);
+            console.log('перед addToStudyWords')
+            this.props.addToStudyWords(wordsToLearn);
+            // console.log(arr);
+            // setState вызывает перерендер, страсывай локальный стейт только после того как сделал все нужные действия
+            this.setState({range: '1'});
+        }
     };
 
-    setShow() {
-        this.setState((state) => ({isChecked: !state.isChecked}));
+    setShow = () => {
+        this.props.showingCards();
     };
+
+
 
 
     render() {
@@ -66,7 +76,7 @@ class Setting extends Component{
                         <p className='settings__count'>{this.state.range}</p>
                         <input onChange={this.isRange} value={this.state.range} type="range" className='range' min='1' max='12' step='1'/>
                         <label className='settings__checkbox'>Show cards on the main page
-                            <input onClick={this.setShow.bind(this)} value={this.state.isChecked} type="checkbox"/>
+                            <input onChange={this.setShow} type="checkbox" checked={this.props.isShowingCards}/>
                         </label>
                         <button className='settings__button' onClick={this.handleSave}>Save</button>
                     </div>
@@ -77,9 +87,10 @@ class Setting extends Component{
 }
 
 const mapStateToProps = (state) => {
+    console.log('делаем пропсы на основе стейта в mapStateToProps', state)
     return {
-        vocabularyS: state.vocabulary ? state.vocabulary : [],
-        wordsToLearn: state.wordsToLearn ? state.wordsToLearn: [],
+        vocabulary: state.vocabulary,
+        wordsToLearn: state.wordsToLearn,
         isShowingCards: state.isShowingCards
     }
 };
